@@ -25,22 +25,17 @@
               "on-background": "#141b2b",
               background: "#f9f9ff",
               "on-secondary": "#ffffff",
-              "tertiary-fixed-dim": "#4cd7f6",
-              "on-secondary-fixed": "#261a00",
               "primary-container": "#1e429f",
               outline: "#747683",
               "on-surface-variant": "#444652",
-              "on-tertiary": "#ffffff",
               secondary: "#795900",
               "surface-dim": "#d3daef",
               "surface-container-lowest": "#ffffff",
               tertiary: "#003843",
-              "tertiary-fixed": "#acedff",
               "on-error": "#ffffff",
               "tertiary-container": "#00515f",
               "on-primary": "#ffffff",
               error: "#ba1a1a",
-              "on-primary-fixed-variant": "#1a3f9c",
               "surface-container": "#e9edff",
               "surface-variant": "#dce2f7",
               "on-error-container": "#93000a",
@@ -52,10 +47,8 @@
               "on-secondary-fixed-variant": "#5c4300",
               "on-primary-fixed": "#00164d",
               primary: "#002b80",
-              "surface-tint": "#3858b6",
               "error-container": "#ffdad6",
               "secondary-fixed-dim": "#f9bd22",
-              "on-tertiary-fixed-variant": "#004e5c",
               "surface-container-highest": "#dce2f7",
               "inverse-primary": "#b5c4ff",
               "surface-container-low": "#f1f3ff",
@@ -191,18 +184,17 @@
     </div>
 
     <header
-      class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 max-w-container-max mx-auto bg-surface border-b border-outline-variant shadow-sm"
+      class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-3 md:px-gutter h-16 max-w-container-max mx-auto bg-surface border-b border-outline-variant shadow-sm"
     >
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 md:gap-3">
         <img
           id="logoImage"
           alt="Logo"
-          class="h-10 w-10 object-contain rounded-full"
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%231e429f' width='40' height='40' rx='20'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-size='16'%3ES%3C/text%3E%3C/svg%3E"
+          class="h-8 w-8 md:h-10 md:w-10 object-cover rounded-full"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%231e429f' width='40' height='40' rx='20'/%3E%3Ctext x='20' y='27' text-anchor='middle' fill='white' font-size='18'%3E🏫%3C/text%3E%3C/svg%3E"
         />
-        <span
-          class="text-headline-md font-headline-md font-bold text-primary hidden md:block"
-          >E-Kelulusan Spasas</span
+        <span class="text-base md:text-headline-md font-bold text-primary"
+          >E-Kelulusan</span
         >
       </div>
       <nav class="hidden md:flex items-center gap-6">
@@ -219,18 +211,20 @@
           >Panduan</a
         >
       </nav>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 md:gap-4">
         <button
           onclick="window.print()"
-          class="no-print hidden md:flex items-center gap-1 px-3 py-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-sm"
+          class="no-print hidden md:flex items-center gap-1 px-2 py-1.5 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-xs"
         >
-          <span class="material-symbols-outlined text-[18px]">print</span> Cetak
+          <span class="material-symbols-outlined text-[16px]">print</span> Cetak
         </button>
         <button
           onclick="window.location.href = 'login.html'"
-          class="flex items-center gap-1 px-4 py-2 bg-error text-on-error rounded-lg hover:bg-error/80 transition-colors font-label-md active:scale-95"
+          class="flex items-center gap-1 px-3 py-1.5 md:px-4 md:py-2 bg-error text-on-error rounded-lg hover:bg-error/80 transition-colors text-sm md:font-label-md active:scale-95"
         >
-          <span class="material-symbols-outlined text-[18px]">logout</span>
+          <span class="material-symbols-outlined text-[16px] md:text-[18px]"
+            >logout</span
+          >
           <span class="hidden md:inline">Keluar</span>
         </button>
       </div>
@@ -253,10 +247,12 @@
         >
           <span class="material-symbols-outlined">school</span> Spasas
         </div>
-        <div class="text-surface-variant opacity-80 text-center md:text-left">
+        <div
+          class="text-surface-variant opacity-80 text-center md:text-left text-sm"
+        >
           © 2026 SMP Negeri 1 Sukosari. All rights reserved.
         </div>
-        <div class="flex gap-4">
+        <div class="flex gap-4 text-sm">
           <a
             class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
             href="#"
@@ -277,7 +273,6 @@
     </footer>
 
     <script>
-      // 🔥 GANTI dengan config Firebase Anda
       const firebaseConfig = {
         apiKey: "AIzaSyBjmifPVIt1rGfIYEJKCuQJrLLtUT1VHb8",
         authDomain: "spasas-kelulusan.firebaseapp.com",
@@ -291,36 +286,27 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
 
-      // 🔥 GANTI dengan link Twibbonize Anda
-      const TWIBBONIZE_URL = "https://twb.nz/espasaslulus2026";
-
+      const TWIBBONIZE_URL = "https://twb.nz/spasas2026";
       const urlParams = new URLSearchParams(window.location.search);
       const nisn = urlParams.get("nisn");
       if (!nisn) window.location.href = "login.html";
 
-      // 🔥 Format tanggal lahir bersih (DD-MM-YYYY)
       function formatTanggal(tgl) {
         if (!tgl) return "-";
-        // Hapus jam jika ada (ambil bagian tanggal saja)
         const bersih = String(tgl).split("T")[0];
-        // Jika format YYYY-MM-DD, ubah ke DD-MM-YYYY
         const parts = bersih.split("-");
-        if (parts.length === 3) {
+        if (parts.length === 3)
           return parts[2] + "-" + parts[1] + "-" + parts[0];
-        }
-        // Jika sudah DD-MM-YYYY
         return bersih;
       }
 
       async function loadDashboard() {
         try {
-          // Load config untuk logo
           const configSnap = await db.ref("config").once("value");
           if (configSnap.exists()) {
             const cfg = configSnap.val();
-            if (cfg.logo_url) {
+            if (cfg.logo_url)
               document.getElementById("logoImage").src = cfg.logo_url;
-            }
           }
 
           const snapshot = await db.ref("siswa/" + nisn).once("value");
@@ -337,18 +323,16 @@
           document.getElementById("resultContainer").innerHTML = `
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-md overflow-hidden flex flex-col md:flex-row relative print-card">
       <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(circle at 100% 0%,${isLulus ? "#f9bd22" : "#ba1a1a"} 0%,transparent 40%),radial-gradient(circle at 0% 100%,#002b80 0%,transparent 40%)"></div>
-      
       <div class="p-6 md:p-8 flex-1 border-b md:border-b-0 md:border-r border-outline-variant bg-surface-container-low bg-opacity-50 z-10 relative">
         <h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-primary mb-stack-lg">Pengumuman Kelulusan</h1>
         <div class="space-y-stack-md">
           <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">NISN</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nisn}</span></div>
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Nama Peserta Didik</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nama}</span></div>
+          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Nama</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nama}</span></div>
           <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tempat Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.tempatLahir || "-"}</span></div>
           <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tanggal Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${formatTanggal(s.tanggalLahir)}</span></div>
           <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Kelas</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.kelas || "-"}</span></div>
         </div>
       </div>
-      
       <div class="p-6 md:p-8 w-full md:w-2/5 flex flex-col items-center justify-center ${isLulus ? "bg-primary" : "bg-surface-container-high"} z-10 relative text-center">
         <div class="${isLulus ? "bg-secondary-fixed-dim text-on-secondary-fixed celebrate" : "bg-error-container text-on-error-container"} font-headline-md text-headline-md px-6 py-3 rounded-full shadow-lg mb-6 transform -rotate-2 border-4 ${isLulus ? "border-white/20" : "border-error/30"}">
           ${isLulus ? "🎓 LULUS" : "📚 BELUM LULUS"}
@@ -359,12 +343,12 @@
         ${
           isLulus
             ? `
-        <div class="w-full space-y-4 no-print">
+        <div class="w-full space-y-3 no-print">
           <button onclick="window.open('${TWIBBONIZE_URL}','_blank')" class="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-6 py-3 rounded-lg shadow hover:bg-secondary-fixed transition-colors flex items-center gap-2 w-full justify-center active:scale-95 duration-150">
             <span class="material-symbols-outlined text-[20px]">photo_camera</span>
             📸 Pasang Twibbon & Pamerkan Kelulusanmu! 🎉
           </button>
-          <p class="text-on-primary text-xs opacity-70">Bikin foto kelulusanmu makin keren! Klik dan bagikan ke teman-teman ✨</p>
+          <p class="text-on-primary text-xs opacity-70">Bikin foto kelulusanmu makin keren! Klik dan bagikan ✨</p>
         </div>`
             : ""
         }
