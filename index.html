@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>E-Kelulusan Spasas 2026 - Countdown</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(30, 66, 159, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 15px rgba(30, 66, 159, 0);
+        }
+      }
+      .pulse-glow {
+        animation: pulse-glow 2s infinite;
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#ffdf9f",
+              "inverse-surface": "#293040",
+              surface: "#f9f9ff",
+              background: "#f9f9ff",
+              "surface-container": "#e9edff",
+              "on-surface-variant": "#444652",
+              "error-container": "#ffdad6",
+              error: "#ba1a1a",
+              "surface-bright": "#f9f9ff",
+              "on-primary-fixed": "#00164d",
+              "on-primary": "#ffffff",
+              "on-background": "#141b2b",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#6f5100",
+              "secondary-container": "#ffc329",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-container-low": "#f1f3ff",
+              "inverse-on-surface": "#edf0ff",
+              secondary: "#795900",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#b5c4ff",
+              "surface-variant": "#dce2f7",
+              "secondary-fixed-dim": "#f9bd22",
+              "on-surface": "#141b2b",
+              "outline-variant": "#c4c6d4",
+              outline: "#747683",
+              "surface-dim": "#d3daef",
+              "surface-container-high": "#e1e8fd",
+              primary: "#002b80",
+              "primary-container": "#1e429f",
+              "primary-fixed": "#dbe1ff",
+              "inverse-primary": "#b5c4ff",
+              "surface-tint": "#3858b6",
+              "on-secondary-fixed": "#261a00",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "stack-sm": "8px",
+              "stack-lg": "32px",
+              base: "8px",
+              "stack-md": "16px",
+              "container-max": "1280px",
+              "margin-mobile": "16px",
+              gutter: "24px",
+            },
+            fontFamily: {
+              "body-lg": ["Inter"],
+              "label-sm": ["Inter"],
+              "headline-md": ["Montserrat"],
+              "headline-xl": ["Montserrat"],
+              "label-md": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-lg-mobile": ["Montserrat"],
+              "headline-lg": ["Montserrat"],
+            },
+            fontSize: {
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-md": ["14px", { lineHeight: "20px", fontWeight: "600" }],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md"
+  >
+    <!-- NAVBAR -->
+    <nav
+      class="bg-surface border-b border-outline-variant shadow-sm w-full top-0 z-50"
+    >
+      <div
+        class="flex justify-between items-center w-full px-margin-mobile md:px-stack-lg max-w-container-max mx-auto h-16"
+      >
+        <div class="text-headline-md font-headline-md font-bold text-primary">
+          E-Kelulusan Spasas
+        </div>
+        <div class="flex gap-4 items-center">
+          <a
+            id="navPanduan"
+            class="text-on-surface-variant font-label-sm md:font-label-md hover:text-primary transition-colors"
+            href="#"
+            >📖 Panduan</a
+          >
+          <a
+            id="navKontak"
+            class="text-on-surface-variant font-label-sm md:font-label-md hover:text-primary transition-colors"
+            href="#"
+            >💬 Kontak</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main
+      class="flex-grow flex flex-col items-center justify-center p-margin-mobile md:p-stack-lg relative overflow-hidden bg-primary-container text-on-primary"
+    >
+      <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div
+          class="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary rounded-full mix-blend-screen filter blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary rounded-full mix-blend-screen filter blur-3xl"
+        ></div>
+      </div>
+      <div
+        class="z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center space-y-stack-lg"
+      >
+        <!-- LOGO -->
+        <div class="space-y-stack-md flex flex-col items-center">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-surface-container-lowest shadow-lg p-1.5 flex items-center justify-center relative overflow-hidden border-4 border-secondary-container mx-auto"
+          >
+            <img
+              id="logoImage"
+              alt="Logo"
+              class="w-full h-full object-cover rounded-full"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%231e429f' width='100' height='100' rx='50'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='45'%3E🏫%3C/text%3E%3C/svg%3E"
+            />
+          </div>
+          <h1
+            class="font-headline-xl text-headline-lg-mobile md:text-headline-xl text-on-primary"
+          >
+            Pengumuman Kelulusan
+          </h1>
+          <p
+            id="tahunAjaranDisplay"
+            class="font-headline-md text-headline-md text-secondary-container"
+          >
+            SMP Negeri 1 Sukosari Tahun Pelajaran 2025/2026
+          </p>
+        </div>
+
+        <!-- COUNTDOWN - RESPONSIVE RAPI -->
+        <div
+          class="bg-surface/10 backdrop-blur-md border border-surface/20 p-4 md:p-stack-lg rounded-xl shadow-2xl w-full max-w-lg md:max-w-3xl"
+        >
+          <div class="grid grid-cols-4 gap-2 md:gap-4">
+            <!-- Hari -->
+            <div
+              class="flex flex-col items-center justify-center bg-surface-container-lowest/10 p-2 md:p-stack-md rounded-lg border border-surface-container-lowest/20"
+            >
+              <span
+                class="text-2xl md:text-5xl font-bold text-secondary-container tabular-nums"
+                id="days"
+                >00</span
+              >
+              <span
+                class="text-[10px] md:text-sm text-on-primary mt-1 uppercase tracking-wider"
+                >Hari</span
+              >
+            </div>
+            <!-- Jam -->
+            <div
+              class="flex flex-col items-center justify-center bg-surface-container-lowest/10 p-2 md:p-stack-md rounded-lg border border-surface-container-lowest/20"
+            >
+              <span
+                class="text-2xl md:text-5xl font-bold text-secondary-container tabular-nums"
+                id="hours"
+                >00</span
+              >
+              <span
+                class="text-[10px] md:text-sm text-on-primary mt-1 uppercase tracking-wider"
+                >Jam</span
+              >
+            </div>
+            <!-- Menit -->
+            <div
+              class="flex flex-col items-center justify-center bg-surface-container-lowest/10 p-2 md:p-stack-md rounded-lg border border-surface-container-lowest/20"
+            >
+              <span
+                class="text-2xl md:text-5xl font-bold text-secondary-container tabular-nums"
+                id="minutes"
+                >00</span
+              >
+              <span
+                class="text-[10px] md:text-sm text-on-primary mt-1 uppercase tracking-wider"
+                >Menit</span
+              >
+            </div>
+            <!-- Detik -->
+            <div
+              class="flex flex-col items-center justify-center bg-surface-container-lowest/10 p-2 md:p-stack-md rounded-lg border border-surface-container-lowest/20"
+            >
+              <span
+                class="text-2xl md:text-5xl font-bold text-secondary-container tabular-nums"
+                id="seconds"
+                >00</span
+              >
+              <span
+                class="text-[10px] md:text-sm text-on-primary mt-1 uppercase tracking-wider"
+                >Detik</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- BUTTON -->
+        <div class="pt-stack-md w-full max-w-md">
+          <button
+            id="btnLocked"
+            class="w-full bg-surface-variant text-on-surface-variant font-label-md text-label-md py-4 px-6 rounded-lg opacity-70 cursor-not-allowed flex items-center justify-center gap-2 shadow-inner border border-outline-variant"
+            disabled
+          >
+            <span class="material-symbols-outlined">lock</span> Login Dibuka
+            Setelah Countdown Selesai
+          </button>
+          <button
+            id="btnActive"
+            class="hidden w-full bg-primary text-on-primary font-label-md text-label-md py-4 px-6 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:bg-primary-container transition-all active:scale-95 pulse-glow cursor-pointer"
+            onclick="window.location.href = 'login.html'"
+          >
+            <span class="material-symbols-outlined">login</span> Masuk ke Portal
+            Kelulusan
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-surface-container-lowest border-t border-outline-variant w-full bottom-0 z-50"
+    >
+      <div
+        class="w-full py-stack-md px-margin-mobile flex flex-col md:flex-row justify-between items-center gap-base max-w-container-max mx-auto"
+      >
+        <div
+          id="footerCopyright"
+          class="text-secondary font-body-md text-body-md opacity-90"
+        >
+          © 2026 SMP Negeri 1 Sukosari. All rights reserved.
+        </div>
+        <div class="flex gap-4 items-center">
+          <a
+            id="footerPanduan"
+            class="text-on-surface-variant font-label-sm hover:underline decoration-secondary"
+            href="#"
+            >Panduan</a
+          >
+          <a
+            id="footerKontak"
+            class="text-on-surface-variant font-label-sm hover:underline decoration-secondary"
+            href="#"
+            >Admin</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBjmifPVIt1rGfIYEJKCuQJrLLtUT1VHb8",
+        authDomain: "spasas-kelulusan.firebaseapp.com",
+        databaseURL:
+          "https://spasas-kelulusan-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "spasas-kelulusan",
+        storageBucket: "spasas-kelulusan.firebasestorage.app",
+        messagingSenderId: "330319909788",
+        appId: "1:330319909788:web:0ebeac8d293e539c776e59",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      let targetTimestamp = null,
+        countdownInterval = null,
+        isAccessOpen = false;
+      let siteConfig = {};
+
+      async function loadConfig() {
+        try {
+          const snapshot = await db.ref("config").once("value");
+          if (snapshot.exists()) siteConfig = snapshot.val();
+        } catch (e) {}
+
+        if (!siteConfig.tanggal_pengumuman)
+          siteConfig.tanggal_pengumuman = "2026-06-10";
+        if (!siteConfig.jam_pengumuman) siteConfig.jam_pengumuman = "00:00";
+        if (!siteConfig.tahun_ajaran) siteConfig.tahun_ajaran = "2025/2026";
+        if (!siteConfig.tahun_footer) siteConfig.tahun_footer = "2026";
+
+        document.getElementById("tahunAjaranDisplay").textContent =
+          "SMP Negeri 1 Sukosari Tahun Pelajaran " + siteConfig.tahun_ajaran;
+        document.getElementById("footerCopyright").innerHTML =
+          "© " + siteConfig.tahun_footer + " SMP Negeri 1 Sukosari.";
+
+        if (siteConfig.logo_url) {
+          document.getElementById("logoImage").src = siteConfig.logo_url;
+        } else {
+          document.getElementById("logoImage").src =
+            "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%231e429f%22 width=%22100%22 height=%22100%22 rx=%2250%22/%3E%3Ctext x=%2250%22 y=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22%3E🏫%3C/text%3E%3C/svg%3E";
+        }
+
+        if (siteConfig.link_panduan) {
+          document.getElementById("navPanduan").href = siteConfig.link_panduan;
+          document.getElementById("footerPanduan").href =
+            siteConfig.link_panduan;
+        }
+        if (siteConfig.kontak) {
+          const wa =
+            "https://wa.me/" + String(siteConfig.kontak).replace(/\D/g, "");
+          document.getElementById("navKontak").href = wa;
+          document.getElementById("footerKontak").href = wa;
+        }
+
+        const tgl = String(siteConfig.tanggal_pengumuman).split("T")[0];
+        const jam = String(siteConfig.jam_pengumuman).split("T")[0];
+        targetTimestamp = new Date(tgl + "T" + jam + ":00+07:00").getTime();
+
+        if (Date.now() >= targetTimestamp && !isAccessOpen) enableLoginButton();
+      }
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function updateCountdown() {
+        if (!targetTimestamp) return;
+        const diff = targetTimestamp - Date.now();
+        if (diff <= 0) {
+          document.getElementById("days").innerText = "00";
+          document.getElementById("hours").innerText = "00";
+          document.getElementById("minutes").innerText = "00";
+          document.getElementById("seconds").innerText = "00";
+          if (!isAccessOpen) enableLoginButton();
+          return;
+        }
+        document.getElementById("days").innerText = pad(
+          Math.floor(diff / (1000 * 60 * 60 * 24)),
+        );
+        document.getElementById("hours").innerText = pad(
+          Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        );
+        document.getElementById("minutes").innerText = pad(
+          Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        );
+        document.getElementById("seconds").innerText = pad(
+          Math.floor((diff % (1000 * 60)) / 1000),
+        );
+      }
+
+      function enableLoginButton() {
+        isAccessOpen = true;
+        if (countdownInterval) clearInterval(countdownInterval);
+        document.getElementById("btnLocked").classList.add("hidden");
+        document.getElementById("btnActive").classList.remove("hidden");
+      }
+
+      async function init() {
+        await loadConfig();
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+        setInterval(loadConfig, 300000);
+      }
+      init();
+      // ==================== ADMIN BYPASS ====================
+      // Klik 3x pada judul "E-Kelulusan Spasas" untuk membuka prompt admin
+      let clickCount = 0;
+      document
+        .querySelector(".text-headline-md")
+        .addEventListener("click", function () {
+          clickCount++;
+          if (clickCount >= 3) {
+            clickCount = 0;
+            const pass = prompt("🔐 Masukkan password admin:");
+            if (
+              pass &&
+              siteConfig.admin_password &&
+              pass === siteConfig.admin_password
+            ) {
+              window.location.href = "login.html";
+            } else if (pass) {
+              alert("❌ Password salah!");
+            }
+          }
+          setTimeout(() => {
+            clickCount = 0;
+          }, 2000);
+        });
+    </script>
+  </body>
+</html>

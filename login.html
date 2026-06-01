@@ -1,0 +1,450 @@
+<!doctype html>
+<html class="light" lang="id" style="">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login - E-Kelulusan Spasas</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#293040",
+              "on-background": "#141b2b",
+              background: "#f9f9ff",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#4cd7f6",
+              "on-secondary-fixed": "#261a00",
+              "primary-container": "#1e429f",
+              outline: "#747683",
+              "on-surface-variant": "#444652",
+              "on-tertiary": "#ffffff",
+              secondary: "#795900",
+              "surface-dim": "#d3daef",
+              "surface-container-lowest": "#ffffff",
+              tertiary: "#003843",
+              "tertiary-fixed": "#acedff",
+              "on-error": "#ffffff",
+              "tertiary-container": "#00515f",
+              "on-primary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed-variant": "#1a3f9c",
+              "surface-container": "#e9edff",
+              "surface-variant": "#dce2f7",
+              "on-error-container": "#93000a",
+              "secondary-fixed": "#ffdf9f",
+              "on-secondary-container": "#6f5100",
+              surface: "#f9f9ff",
+              "primary-fixed-dim": "#b5c4ff",
+              "outline-variant": "#c4c6d4",
+              "on-secondary-fixed-variant": "#5c4300",
+              "on-primary-fixed": "#00164d",
+              primary: "#002b80",
+              "surface-tint": "#3858b6",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#f9bd22",
+              "on-tertiary-fixed-variant": "#004e5c",
+              "surface-container-highest": "#dce2f7",
+              "inverse-primary": "#b5c4ff",
+              "surface-container-low": "#f1f3ff",
+              "primary-fixed": "#dbe1ff",
+              "on-tertiary-fixed": "#001f26",
+              "secondary-container": "#ffc329",
+              "inverse-on-surface": "#edf0ff",
+              "on-primary-container": "#a1b6ff",
+              "on-surface": "#141b2b",
+              "surface-bright": "#f9f9ff",
+              "surface-container-high": "#e1e8fd",
+              "on-tertiary-container": "#37c9e7",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "16px",
+              gutter: "24px",
+              "stack-md": "16px",
+              base: "8px",
+              "container-max": "1280px",
+              "stack-lg": "32px",
+              "stack-sm": "8px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "headline-lg-mobile": ["Montserrat"],
+              "headline-md": ["Montserrat"],
+              "headline-xl": ["Montserrat"],
+              "headline-lg": ["Montserrat"],
+              "label-sm": ["Inter"],
+              "label-md": ["Inter"],
+              "body-lg": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+              "label-md": ["14px", { lineHeight: "20px", fontWeight: "600" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .fill-icon {
+        font-variation-settings: "FILL" 1;
+      }
+      .spinner {
+        border: 2px solid transparent;
+        border-top-color: currentColor;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-8px);
+        }
+        50% {
+          transform: translateX(8px);
+        }
+        75% {
+          transform: translateX(-4px);
+        }
+      }
+      .shake {
+        animation: shake 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-primary to-primary-container min-h-screen flex flex-col items-center justify-center relative font-body-md text-body-md text-on-surface"
+  >
+    <!-- Ambient Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <div
+        class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-surface-container-high/20 blur-3xl"
+      ></div>
+      <div
+        class="absolute top-[60%] -right-[10%] w-[40%] h-[40%] rounded-full bg-primary-fixed/10 blur-3xl"
+      ></div>
+    </div>
+    <!-- Main Container -->
+    <div
+      class="w-full max-w-md px-margin-mobile md:px-0 z-10 relative mt-16 mb-stack-lg"
+    >
+      <!-- Header / Logo Area -->
+      <div class="text-center mb-stack-lg flex flex-col items-center">
+        <img
+          alt="Logo E-Kelulusan Spasas"
+          class="w-24 h-24 mb-stack-md rounded-full shadow-md bg-surface border border-outline-variant p-1"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs93lT6e1ax4vBjzbUQecsnzaKxO_ecgnyL0FLcBqJXbBjQP8ECePUIPv63jRolWpev_c2EJZWqeCZBJBIjfa611Rn8joW03kjf96e_ecPffaphN8uC3zWJBQHQ6yFWxCx-9azRKRbKVk3g9pCCGbino2MNs2Quk92ZGiUTX7CTQ_tSGWdOxULt6b-UeyDkjqj5LcJtmYMdqcQIQj_El4LRaD93q9Gt3lzwJnUJ65UwSv-BZa7Q-CZiBwVfJETDjSCvXC4Ag-LOdI"
+        />
+        <h1
+          class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary mb-1"
+        >
+          SMP Negeri 1 Sukosari
+        </h1>
+        <p class="font-body-md text-body-md text-primary-fixed">
+          Portal E-Kelulusan Resmi
+        </p>
+      </div>
+      <!-- Login Card -->
+      <div
+        class="bg-surface rounded-xl shadow-lg border border-outline-variant/30 overflow-hidden relative backdrop-blur-sm bg-opacity-95"
+      >
+        <!-- Error Alert -->
+        <div
+          id="errorAlert"
+          class="hidden bg-error-container text-on-error-container px-stack-md py-3 flex items-center gap-2 border-b border-error/20"
+        >
+          <span class="material-symbols-outlined">error</span>
+          <span id="errorMessage" class="font-label-md text-label-md"></span>
+        </div>
+        <!-- Form Body -->
+        <div class="p-stack-lg">
+          <form id="loginForm" class="space-y-stack-md">
+            <!-- NISN Input -->
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface mb-2"
+                for="nisn"
+                >Nomor Induk Siswa Nasional (NISN)</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline"
+                >
+                  <span class="material-symbols-outlined">badge</span>
+                </div>
+                <input
+                  class="block w-full pl-10 pr-3 py-3 border border-outline-variant rounded-lg bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary text-on-surface font-body-md text-body-md transition-colors"
+                  id="nisn"
+                  name="nisn"
+                  placeholder="Masukkan 10 digit NISN"
+                  required=""
+                  type="text"
+                  minlength="10"
+                  maxlength="10"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <!-- Password Input -->
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface mb-2"
+                for="password"
+                >Kata Sandi</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline"
+                >
+                  <span class="material-symbols-outlined">lock</span>
+                </div>
+                <input
+                  class="block w-full pl-10 pr-10 py-3 border border-outline-variant rounded-lg bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary text-on-surface font-body-md text-body-md transition-colors"
+                  id="password"
+                  name="password"
+                  placeholder="Masukkan kata sandi"
+                  required=""
+                  type="password"
+                  autocomplete="off"
+                />
+                <button
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors focus:outline-none"
+                  onclick="togglePassword()"
+                  type="button"
+                >
+                  <span
+                    class="material-symbols-outlined"
+                    id="togglePasswordIcon"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <button
+              id="submitBtn"
+              class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-label-md text-label-md bg-secondary-fixed-dim text-on-secondary-fixed-variant hover:bg-secondary-container hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-fixed-dim transition-all active:scale-95 duration-150 mt-stack-lg disabled:opacity-60 disabled:cursor-not-allowed"
+              type="submit"
+            >
+              <span class="material-symbols-outlined mr-2">login</span>
+              <span id="btnText">Masuk ke Portal</span>
+              <span id="btnSpinner" class="hidden spinner ml-2"></span>
+            </button>
+          </form>
+          <div class="mt-stack-md text-center">
+            <p class="font-label-sm text-label-sm text-outline">
+              Lupa kata sandi? Hubungi Wali Kelas Anda.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer
+      class="w-full py-stack-lg px-gutter mt-auto bg-inverse-surface dark:bg-on-background z-10 relative border-t-0 shadow-none"
+    >
+      <div
+        class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md"
+      >
+        <div
+          class="font-headline-md text-headline-md text-secondary-fixed flex items-center gap-2"
+        >
+          <span class="material-symbols-outlined fill-icon">school</span>
+          <span>Spasas</span>
+        </div>
+        <nav class="flex flex-wrap justify-center gap-stack-md">
+          <a
+            class="font-body-md text-body-md text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
+            href="#"
+            >Hubungi Kami</a
+          >
+          <a
+            class="font-body-md text-body-md text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
+            href="#"
+            >Lokasi</a
+          >
+          <a
+            class="font-body-md text-body-md text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
+            href="#"
+            >Website Sekolah</a
+          >
+        </nav>
+        <div
+          class="font-body-md text-body-md text-on-primary-fixed dark:text-primary-fixed text-center md:text-right text-surface-variant opacity-80"
+        >
+          © 2026 SMP Negeri 1 Sukosari. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script>
+      // ==================== FIREBASE CONFIG ====================
+      const firebaseConfig = {
+        apiKey: "AIzaSyBjmifPVIt1rGfIYEJKCuQJrLLtUT1VHb8",
+        authDomain: "spasas-kelulusan.firebaseapp.com",
+        databaseURL:
+          "https://spasas-kelulusan-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "spasas-kelulusan",
+        storageBucket: "spasas-kelulusan.firebasestorage.app",
+        messagingSenderId: "330319909788",
+        appId: "1:330319909788:web:0ebeac8d293e539c776e59",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      // ==================== TOGGLE PASSWORD ====================
+      function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.textContent = "visibility_off";
+        } else {
+          passwordInput.type = "password";
+          toggleIcon.textContent = "visibility";
+        }
+      }
+
+      // ==================== ERROR HANDLING ====================
+      function showError(message) {
+        const alert = document.getElementById("errorAlert");
+        const msg = document.getElementById("errorMessage");
+        msg.textContent = message;
+        alert.classList.remove("hidden");
+        alert.parentElement.classList.add("shake");
+        setTimeout(() => alert.parentElement.classList.remove("shake"), 500);
+      }
+
+      function hideError() {
+        document.getElementById("errorAlert").classList.add("hidden");
+      }
+
+      function setLoading(isLoading) {
+        const btn = document.getElementById("submitBtn");
+        const btnText = document.getElementById("btnText");
+        const btnSpinner = document.getElementById("btnSpinner");
+
+        if (isLoading) {
+          btn.disabled = true;
+          btnText.textContent = "Memproses...";
+          btnSpinner.classList.remove("hidden");
+        } else {
+          btn.disabled = false;
+          btnText.textContent = "Masuk ke Portal";
+          btnSpinner.classList.add("hidden");
+        }
+      }
+
+      // ==================== LOGIN DENGAN FIREBASE ====================
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          hideError();
+
+          const nisn = document.getElementById("nisn").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          // Validasi
+          if (nisn.length !== 10 || !/^\d{10}$/.test(nisn)) {
+            showError("NISN harus 10 digit angka.");
+            return;
+          }
+          if (!password) {
+            showError("Kata sandi tidak boleh kosong.");
+            return;
+          }
+
+          setLoading(true);
+
+          try {
+            // Query Firebase Realtime Database
+            const snapshot = await db.ref("siswa/" + nisn).once("value");
+
+            if (!snapshot.exists()) {
+              showError("❌ NISN tidak ditemukan. Periksa kembali nomor Anda.");
+            } else {
+              const siswa = snapshot.val();
+
+              if (siswa.password !== password) {
+                showError("❌ Kata sandi salah. Silakan coba lagi.");
+              } else {
+                // Login berhasil - redirect ke dashboard
+                window.location.href = "dashboard.html?nisn=" + nisn;
+              }
+            }
+          } catch (err) {
+            console.error("Login error:", err);
+            showError("⚠️ Gagal terhubung. Periksa koneksi internet Anda.");
+          } finally {
+            setLoading(false);
+          }
+        });
+    </script>
+  </body>
+</html>
