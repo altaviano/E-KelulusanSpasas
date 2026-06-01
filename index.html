@@ -43,7 +43,8 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary":"#ffffff
 
 <div class="space-y-2 md:space-y-stack-md flex flex-col items-center">
 <div class="w-24 h-24 md:w-40 md:h-40 rounded-full bg-surface-container-lowest shadow-lg p-1.5 flex items-center justify-center relative overflow-hidden border-4 border-secondary-container">
-<span id="logoMain" class="text-5xl md:text-7xl">🏫</span>
+<img id="logoMain" class="w-full h-full object-cover rounded-full hidden" src="" alt="Logo"/>
+<span id="logoFallback" class="text-5xl md:text-7xl">🏫</span>
 </div>
 <h1 class="text-xl md:font-headline-xl font-bold text-on-primary">Pengumuman Kelulusan</h1>
 <p id="tahunAjaranDisplay" class="text-sm md:font-headline-md md:text-headline-md text-secondary-container">SMP Negeri 1 Sukosari Tahun Pelajaran 2025/2026</p>
@@ -120,6 +121,14 @@ async function loadConfig() {
   
   document.getElementById('tahunAjaranDisplay').textContent = 'SMP Negeri 1 Sukosari Tahun Pelajaran ' + siteConfig.tahun_ajaran;
   document.getElementById('footerCopyright').innerHTML = '© ' + siteConfig.tahun_footer + ' SMP Negeri 1 Sukosari.';
+  
+  // 🔥 LOGO DARI SHEET CONFIG
+  if(siteConfig.logo_url) {
+    document.getElementById('logoMain').src = siteConfig.logo_url;
+    document.getElementById('logoMain').classList.remove('hidden');
+    document.getElementById('logoFallback').classList.add('hidden');
+    document.getElementById('logoNav').innerHTML = `<img src="${siteConfig.logo_url}" class="w-6 h-6 md:w-8 md:h-8 object-cover rounded-full" alt="Logo">`;
+  }
   
   if(siteConfig.link_panduan) {
     document.getElementById('navPanduan').href = siteConfig.link_panduan;
