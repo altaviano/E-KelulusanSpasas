@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>E-Kelulusan Spasas - Dashboard</title>
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
@@ -13,8 +15,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap"
       rel="stylesheet"
     />
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -121,6 +127,7 @@
         },
       };
     </script>
+
     <style>
       .material-symbols-outlined {
         font-variation-settings:
@@ -168,9 +175,8 @@
       }
     </style>
   </head>
-  <body
-    class="bg-background text-on-background font-body-md flex flex-col min-h-screen pt-16"
-  >
+  
+  <body class="bg-background text-on-background font-body-md flex flex-col min-h-screen pt-16">
     <div
       id="loadingOverlay"
       class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm"
@@ -193,91 +199,56 @@
           class="h-8 w-8 md:h-10 md:w-10 object-cover rounded-full"
           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%231e429f' width='40' height='40' rx='20'/%3E%3Ctext x='20' y='27' text-anchor='middle' fill='white' font-size='18'%3E🏫%3C/text%3E%3C/svg%3E"
         />
-        <span class="text-base md:text-headline-md font-bold text-primary"
-          >E-Kelulusan</span
-        >
+        <span class="text-base md:text-headline-md font-bold text-primary">
+          E-Kelulusan
+        </span>
       </div>
-      <nav class="hidden md:flex items-center gap-6">
-        <a
-          class="text-primary border-b-2 border-primary font-bold pb-1 cursor-pointer"
-          >Dashboard</a
-        >
-        <a
-          class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer"
-          >Pengumuman</a
-        >
-        <a
-          class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer"
-          >Panduan</a
-        >
-      </nav>
-      <div class="flex items-center gap-2 md:gap-4">
+
+      <div class="flex items-center gap-2 md:gap-4 ml-auto">
         <button
-          onclick="window.print()"
-          class="no-print hidden md:flex items-center gap-1 px-2 py-1.5 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-xs"
+          id="btnScreenshot"
+          class="flex items-center gap-1 px-2 py-1.5 md:px-3 md:py-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors text-xs md:text-sm active:scale-95"
         >
-          <span class="material-symbols-outlined text-[16px]">print</span> Cetak
+          <span class="material-symbols-outlined text-[16px] md:text-[18px]">screenshot_monitor</span>
+          <span>Screenshot</span>
         </button>
+
         <button
           onclick="window.location.href = 'login.html'"
-          class="flex items-center gap-1 px-3 py-1.5 md:px-4 md:py-2 bg-error text-on-error rounded-lg hover:bg-error/80 transition-colors text-sm md:font-label-md active:scale-95"
+          class="flex items-center gap-1 px-2 py-1.5 md:px-4 md:py-2 bg-error text-on-error rounded-lg hover:bg-error/80 transition-colors text-xs md:text-sm md:font-label-md active:scale-95"
         >
-          <span class="material-symbols-outlined text-[16px] md:text-[18px]"
-            >logout</span
-          >
-          <span class="hidden md:inline">Keluar</span>
+          <span class="material-symbols-outlined text-[16px] md:text-[18px]">logout</span>
+          <span>Keluar</span>
         </button>
       </div>
     </header>
 
-    <main
-      class="flex-grow flex items-center justify-center p-margin-mobile md:p-gutter"
-    >
+    <main class="flex-grow flex items-center justify-center p-margin-mobile md:p-gutter">
       <div id="resultContainer" class="w-full max-w-3xl"></div>
     </main>
 
-    <footer
-      class="no-print w-full py-stack-lg px-gutter mt-auto bg-inverse-surface text-on-primary-fixed font-body-md"
-    >
-      <div
-        class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md"
-      >
-        <div
-          class="font-headline-md text-headline-md text-secondary-fixed flex items-center gap-2"
-        >
+    <footer class="no-print w-full py-stack-lg px-gutter mt-auto bg-inverse-surface text-on-primary-fixed font-body-md">
+      <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+        <div class="font-headline-md text-headline-md text-secondary-fixed flex items-center gap-2">
           <span class="material-symbols-outlined">school</span> Spasas
         </div>
-        <div
-          class="text-surface-variant opacity-80 text-center md:text-left text-sm"
-        >
+        <div class="text-surface-variant opacity-80 text-center md:text-left text-sm">
           © 2026 SMP Negeri 1 Sukosari. All rights reserved.
         </div>
         <div class="flex gap-4 text-sm">
-          <a
-            class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
-            href="#"
-            >Hubungi Kami</a
-          >
-          <a
-            class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
-            href="#"
-            >Lokasi</a
-          >
-          <a
-            class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity"
-            href="#"
-            >Website Sekolah</a
-          >
+          <a class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity" href="#">Hubungi Kami</a>
+          <a class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity" href="#">Lokasi</a>
+          <a class="text-surface-variant opacity-80 hover:text-secondary-fixed transition-opacity" href="#">Website Sekolah</a>
         </div>
       </div>
     </footer>
 
     <script>
+      // 1. Firebase Initialization
       const firebaseConfig = {
         apiKey: "AIzaSyBjmifPVIt1rGfIYEJKCuQJrLLtUT1VHb8",
         authDomain: "spasas-kelulusan.firebaseapp.com",
-        databaseURL:
-          "https://spasas-kelulusan-default-rtdb.asia-southeast1.firebasedatabase.app",
+        databaseURL: "https://spasas-kelulusan-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "spasas-kelulusan",
         storageBucket: "spasas-kelulusan.firebasestorage.app",
         messagingSenderId: "330319909788",
@@ -286,29 +257,37 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
 
+      // 2. Constants & URL Parsing
       const TWIBBONIZE_URL = "https://twb.nz/spasas2026";
       const urlParams = new URLSearchParams(window.location.search);
       const nisn = urlParams.get("nisn");
       if (!nisn) window.location.href = "login.html";
 
-  function formatTanggal(tgl) {
-  if (!tgl) return "-";
-  let bersih = String(tgl).split("T")[0];
-  let parts = bersih.split("-");
-  if (parts.length !== 3) return bersih;
-  
-  let tahun = parts[0];
-  let bulan = parseInt(parts[1], 10);
-  let tanggal = parts[2].padStart(2, '0');
-  
-  const namaBulan = [
-    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-  ];
-  
-  return `${tanggal} ${namaBulan[bulan - 1]} ${tahun}`;
-}
+      // 3. Helper Functions
+      function formatTanggal(tgl) {
+        if (!tgl) return "-";
+        let bersih = String(tgl).split("T")[0];
+        let parts = bersih.split("-");
+        if (parts.length !== 3) return bersih;
+        
+        let tahun = parts[0];
+        let bulan = parseInt(parts[1], 10);
+        let tanggal = parts[2].padStart(2, '0');
+        
+        const namaBulan = [
+          "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+          "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        
+        return `${tanggal} ${namaBulan[bulan - 1]} ${tahun}`;
+      }
 
+      function errorHTML(icon, msg) {
+        document.getElementById("loadingOverlay").classList.add("hidden");
+        return `<div class="text-center p-8"><span class="text-6xl">${icon}</span><h2 class="text-headline-md mt-4">${msg}</h2><button onclick="window.location.href='login.html'" class="mt-4 px-6 py-2 bg-primary text-on-primary rounded-lg">Kembali ke Login</button></div>`;
+      }
+
+      // 4. Load Data Dashboard
       async function loadDashboard() {
         try {
           const configSnap = await db.ref("config").once("value");
@@ -330,39 +309,39 @@
           const isLulus = s.status === "LULUS";
 
           document.getElementById("resultContainer").innerHTML = `
-    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-md overflow-hidden flex flex-col md:flex-row relative print-card">
-      <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(circle at 100% 0%,${isLulus ? "#f9bd22" : "#ba1a1a"} 0%,transparent 40%),radial-gradient(circle at 0% 100%,#002b80 0%,transparent 40%)"></div>
-      <div class="p-6 md:p-8 flex-1 border-b md:border-b-0 md:border-r border-outline-variant bg-surface-container-low bg-opacity-50 z-10 relative">
-        <h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-primary mb-stack-lg">Pengumuman Kelulusan</h1>
-        <div class="space-y-stack-md">
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">NISN</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nisn}</span></div>
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Nama</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nama}</span></div>
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tempat Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.tempatLahir || "-"}</span></div>
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tanggal Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${formatTanggal(s.tanggalLahir)}</span></div>
-          <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Kelas</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.kelas || "-"}</span></div>
-        </div>
-      </div>
-      <div class="p-6 md:p-8 w-full md:w-2/5 flex flex-col items-center justify-center ${isLulus ? "bg-primary" : "bg-surface-container-high"} z-10 relative text-center">
-        <div class="${isLulus ? "bg-secondary-fixed-dim text-on-secondary-fixed celebrate" : "bg-error-container text-on-error-container"} font-headline-md text-headline-md px-6 py-3 rounded-full shadow-lg mb-6 transform -rotate-2 border-4 ${isLulus ? "border-white/20" : "border-error/30"}">
-          ${isLulus ? "🎓 LULUS" : "📚 BELUM LULUS"}
-        </div>
-        <p class="${isLulus ? "text-on-primary" : "text-on-surface-variant"} font-body-md text-body-md mb-6">
-          ${isLulus ? "Selamat atas kelulusan Anda! Teruslah berkarya dan raih cita-cita." : "Tetap semangat! Ini bukan akhir, melainkan awal untuk berusaha lebih baik."}
-        </p>
-        ${
-          isLulus
-            ? `
-        <div class="w-full space-y-3 no-print">
-          <button onclick="window.open('${TWIBBONIZE_URL}','_blank')" class="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-6 py-3 rounded-lg shadow hover:bg-secondary-fixed transition-colors flex items-center gap-2 w-full justify-center active:scale-95 duration-150">
-            <span class="material-symbols-outlined text-[20px]">photo_camera</span>
-            📸 Pasang Twibbon & Pamerkan Kelulusanmu! 🎉
-          </button>
-          <p class="text-on-primary text-xs opacity-70">Bikin foto kelulusanmu makin keren! Klik dan bagikan ✨</p>
-        </div>`
-            : ""
-        }
-      </div>
-    </div>`;
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-md overflow-hidden flex flex-col md:flex-row relative print-card">
+              <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(circle at 100% 0%,${isLulus ? "#f9bd22" : "#ba1a1a"} 0%,transparent 40%),radial-gradient(circle at 0% 100%,#002b80 0%,transparent 40%)"></div>
+              <div class="p-6 md:p-8 flex-1 border-b md:border-b-0 md:border-r border-outline-variant bg-surface-container-low bg-opacity-50 z-10 relative">
+                <h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-primary mb-stack-lg">Pengumuman Kelulusan</h1>
+                <div class="space-y-stack-md">
+                  <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">NISN</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nisn}</span></div>
+                  <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Nama</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.nama}</span></div>
+                  <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tempat Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.tempatLahir || "-"}</span></div>
+                  <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Tanggal Lahir</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${formatTanggal(s.tanggalLahir)}</span></div>
+                  <div><span class="block font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Kelas</span><span class="block font-body-lg text-body-lg text-on-surface font-semibold">${s.kelas || "-"}</span></div>
+                </div>
+              </div>
+              <div class="p-6 md:p-8 w-full md:w-2/5 flex flex-col items-center justify-center ${isLulus ? "bg-primary" : "bg-surface-container-high"} z-10 relative text-center">
+                <div class="${isLulus ? "bg-secondary-fixed-dim text-on-secondary-fixed celebrate" : "bg-error-container text-on-error-container"} font-headline-md text-headline-md px-6 py-3 rounded-full shadow-lg mb-6 transform -rotate-2 border-4 ${isLulus ? "border-white/20" : "border-error/30"}">
+                  ${isLulus ? "🎓 LULUS" : "📚 BELUM LULUS"}
+                </div>
+                <p class="${isLulus ? "text-on-primary" : "text-on-surface-variant"} font-body-md text-body-md mb-6">
+                  ${isLulus ? "Selamat atas kelulusan Anda! Teruslah berkarya dan raih cita-cita." : "Tetap semangat! Ini bukan akhir, melainkan awal untuk berusaha lebih baik."}
+                </p>
+                ${
+                  isLulus
+                    ? `
+                <div class="w-full space-y-3 no-print">
+                  <button onclick="window.open('${TWIBBONIZE_URL}','_blank')" class="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-6 py-3 rounded-lg shadow hover:bg-secondary-fixed transition-colors flex items-center gap-2 w-full justify-center active:scale-95 duration-150">
+                    <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                    📸 Pasang Twibbon
+                  </button>
+                  <p class="text-on-primary text-xs opacity-70">Bikin foto kelulusanmu makin keren! Klik dan bagikan ✨</p>
+                </div>`
+                    : ""
+                }
+              </div>
+            </div>`;
         } catch (e) {
           document.getElementById("resultContainer").innerHTML = errorHTML(
             "⚠️",
@@ -373,11 +352,40 @@
         }
       }
 
-      function errorHTML(icon, msg) {
-        document.getElementById("loadingOverlay").classList.add("hidden");
-        return `<div class="text-center p-8"><span class="text-6xl">${icon}</span><h2 class="text-headline-md mt-4">${msg}</h2><button onclick="window.location.href='login.html'" class="mt-4 px-6 py-2 bg-primary text-on-primary rounded-lg">Kembali ke Login</button></div>`;
-      }
+      // 5. Screenshot Logic
+      document.getElementById("btnScreenshot").addEventListener("click", function () {
+        const targetElement = document.getElementById("resultContainer");
+        
+        if (targetElement.innerHTML.trim() === "") return; // Cegah screenshot kosong
 
+        const btn = this;
+        const originalText = btn.innerHTML;
+        
+        // Ubah state tombol menjadi loading
+        btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span> <span>Memproses...</span>`;
+        btn.disabled = true;
+
+        html2canvas(targetElement, {
+          scale: 2, // Resolusi tinggi agar teks tetap tajam
+          backgroundColor: "#f9f9ff", // Latar belakang yang sama dengan body
+          ignoreElements: function(element) {
+            // Mengecualikan elemen dengan class no-print (misal: area tombol twibbon)
+            return element.classList.contains("no-print"); 
+          }
+        }).then(canvas => {
+          // Kembalikan state tombol
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+
+          // Unduh hasil gambar
+          const link = document.createElement("a");
+          link.download = `Pengumuman_Kelulusan_${nisn}.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        });
+      });
+
+      // 6. Jalankan Dashboard
       loadDashboard();
     </script>
   </body>
